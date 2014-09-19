@@ -7,17 +7,17 @@ How It Works
 ------------
 
 The basic process the renamer uses is:
-1) Download all code in the org
-2) Clear/Delete all code from the org
-3) Rename the fields and objects
-4) Do a find and replace in the code to update the names
-5) Put the code back
+1. Download all code in the org
+2. Clear/Delete all code from the org
+3. Rename the fields and objects
+4. Do a find and replace in the code to update the names
+5. Put the code back
 
 Getting Started
 ===============
 
-*WARNING: Backup your Salesforce instance before running the utility, it modifies all code in the org*
-*WARNING: Read Known Issues before starting
+* **WARNING:** Backup your Salesforce instance before running the utility, it modifies all code in the org
+* **WARNING:** Read Known Issues before starting
 
 Salesforce Renamer is a command line program and must be run from a command line.  Each step must be run in order for the rename to work.
 
@@ -38,9 +38,9 @@ Salesforce Renamer is a command line program and must be run from a command line
 2) Do the renames
 ---------------------------------
 
-i. Run the tool options 1-3 in order.
-ii. Rename any custom setting objects and Apex Sharing Reason names manually.
-iii. Run tool option #4
+1. Run the tool options 1-3 in order.
+2. Rename any custom setting objects and Apex Sharing Reason names manually.
+3. Run tool option #4
  * If #4 failes, it can be run again after fixing any issues in the code by editing the files in renamed.zip or in the org.
 
 3) Post Steps
@@ -52,5 +52,8 @@ iii. Run tool option #4
 
 KNOWN ISSUES
 ============
++ Rename does not happen automatically for Custom Setting Object Names
++ Fields with the same API name as other fields or objects cause issues.  The renamer does a simple find and replace so it cannot distinguish between the between fields from different objects so will rename all of them in the code.
++ Relationship names may not be renamed properly or as expected.
 
 
