@@ -109,7 +109,7 @@ public class SalesforceRenamer {
 		            		// 4: Deploy Renamed Code
 		            		packager.deployZip(RENAMED_FILE);
 		            		break;
-		            	case "5":
+		            	case "r":
 		            		// 5: Restore Code From Backup
 		            		if(renameList.size() == 0) {
 		            			loadRenameRules();
@@ -155,7 +155,7 @@ public class SalesforceRenamer {
         System.out.println(" 2: Clear Code");
         System.out.println(" 3: Rename");
         System.out.println(" 4: Deploy Renamed Code");
-        System.out.println(" 5: Restore Code From Backup");
+        System.out.println(" r: Restore Code From Backup");
         System.out.println(" q: Exit");
         System.out.println();
         System.out.print("Enter choice or q to exit: ");
