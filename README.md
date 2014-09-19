@@ -6,7 +6,8 @@ Salesforce-Renamer is a utility for mass renaming custom Salesforce fields and o
 How It Works
 ------------
 
-The basic process the renamer uses is:
+Here is the basic process that the renamer uses.
+
 1. Download all code in the org
 2. Clear/Delete all code from the org
 3. Rename the fields and objects
