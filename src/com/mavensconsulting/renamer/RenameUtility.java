@@ -49,7 +49,7 @@ public class RenameUtility {
 		String newName 	= rule.getNewFullName();
 		RuleType type 	= rule.getType();
 		
-		if (type.equals("CustomObject") || type.equals("CustomField")) {
+		if (type == RuleType.CustomObject || type == RuleType.CustomField) {
 			//TODO figure out how to rename custom settings
 
 			try {

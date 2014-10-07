@@ -172,14 +172,13 @@ public class SalesforceRenamer {
     
     private void loadRenameRules() {
     	renameList = new ArrayList<RenameRule>();
+    	Reader in = null;
+    	CSVParser parser = null;
     	try {
-    		CSVParser parser = CSVParser.parse(RENAME_LIST,format);
+    		in = new FileReader(RENAME_LIST);
+    		parser = new CSVParser(in,CSVFormat.EXCEL.withHeader());
     		for (CSVRecord csvRecord : parser) {
     		     RenameRule rule = new RenameRule();
-    		     logger.print(csvRecord.get("Type"));
-    		     logger.print(csvRecord.get("Parent"));
-    		     logger.print(csvRecord.get("Old Name"));
-    		     logger.print(csvRecord.get("New Name"));
     		     rule.setType(RuleType.valueOf(csvRecord.get("Type")));
     		     rule.setParent(csvRecord.get("Parent"));
     		     rule.setOldName(csvRecord.get("Old Name"));
@@ -187,8 +186,14 @@ public class SalesforceRenamer {
     		}
     	} catch (IOException eio) {
     		logger.print(eio);
+    	} finally {
+    		try {
+				parser.close();
+				in.close();
+    		} catch (IOException ioe) {
+        		logger.print(ioe);
+        	}
     	}
-    	
     }
     
     private void createEmptyRename() {

@@ -6,8 +6,8 @@ import java.util.HashMap;
 public class RenameRule {
 	private String oldName = "__c";
 	private String newName = "__c";
-	private String parent;
-	private RuleType type;
+	private String parent = "";
+	private RuleType type = null ;
 	private HashMap<String,String> nameVariations;
 	
 	public RenameRule () {
