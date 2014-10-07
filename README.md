@@ -56,5 +56,6 @@ KNOWN ISSUES
 + Rename does not happen automatically for Custom Setting Object Names
 + Fields with the same API name as other fields or objects cause issues.  The renamer does a simple find and replace so it cannot distinguish between the between fields from different objects so will rename all of them in the code.
 + Relationship names may not be renamed properly or as expected.
++ Org namespace must be null.  Meaning, it does not work properly on orgs where managed packages are being built.  
 
 
