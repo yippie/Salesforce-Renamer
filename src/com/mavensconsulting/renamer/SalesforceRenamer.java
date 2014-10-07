@@ -66,16 +66,16 @@ public class SalesforceRenamer {
 		BLANK_FILE 		= ZIP_FOLDER + "/emptyCode.zip";
 		RENAMED_FILE 	= ZIP_FOLDER + "/renamed.zip";
 		RENAME_TEMPLATE = ZIP_FOLDER + "/rules_template.csv";
-		RENAME_LIST		= ZIP_FOLDER + appProps.getProperty("RENAME_LIST","rename.csv");
+		RENAME_LIST		= ZIP_FOLDER + "/" + appProps.getProperty("RENAME_LIST","rename.csv");
 		API_VERSION 	= appProps.getProperty("API_VERSION","31.0");
 		
-			try {
+		try {
 			logger = new MessageHandler(appProps);
-			sforce = new LoginUtility(appProps);
-			packager = new PackageHandler(appProps, logger, sforce);
-			renamer = new RenameUtility(appProps, logger, sforce);
 			try {
+				sforce = new LoginUtility(appProps);
 				sforce.login();
+				packager = new PackageHandler(appProps, logger, sforce);
+				renamer = new RenameUtility(appProps, logger, sforce);
 				renameList = new ArrayList<RenameRule>();
 	
 		        String choice = getUsersChoice();
@@ -88,8 +88,9 @@ public class SalesforceRenamer {
 		            	case "1":
 		            		// 1: Pull Information and Prepare for Rename
 		            		String[] renameTypes = {"ApexClass","ApexComponent","ApexPage","ApexTrigger","CustomObject","EmailTemplate"};
-			                packager.retrieveZip(renameTypes, BACKUP_FILE);
-		            		renamer.createClearPackage(BACKUP_FILE, BLANK_FILE, DESTRUCT_FILE);
+			                if(packager.retrieveZip(renameTypes, BACKUP_FILE)) {
+			                	renamer.createClearPackage(BACKUP_FILE, BLANK_FILE, DESTRUCT_FILE);
+			                }
 		            		break;
 		            	case "2":
 		            		// 2: Clear Code
@@ -136,7 +137,7 @@ public class SalesforceRenamer {
 				logger.print(e);
 			}
 		} catch (Exception e){
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -175,6 +176,10 @@ public class SalesforceRenamer {
     		CSVParser parser = CSVParser.parse(RENAME_LIST,format);
     		for (CSVRecord csvRecord : parser) {
     		     RenameRule rule = new RenameRule();
+    		     logger.print(csvRecord.get("Type"));
+    		     logger.print(csvRecord.get("Parent"));
+    		     logger.print(csvRecord.get("Old Name"));
+    		     logger.print(csvRecord.get("New Name"));
     		     rule.setType(RuleType.valueOf(csvRecord.get("Type")));
     		     rule.setParent(csvRecord.get("Parent"));
     		     rule.setOldName(csvRecord.get("Old Name"));

@@ -23,9 +23,10 @@ public class MessageHandler {
 	public MessageHandler (Properties p) throws IOException {
 		appProps = p;
 		WORK_FOLDER = appProps.getProperty("WORK_FOLDER");
-		defaultLoggingLevel = Level.WARNING;
+		defaultLoggingLevel = Level.SEVERE;
 		
 		logger = Logger.getLogger("RenameLog");
+		logger.setUseParentHandlers(false);
 		FileHandler handler = new FileHandler(WORK_FOLDER + "/output.log",true);
 		logger.addHandler(handler);
 	}
@@ -36,11 +37,14 @@ public class MessageHandler {
 	}
 	
 	public void print(String message) {
-		print(message,defaultLoggingLevel);
+		print(message,Level.INFO);
 	}
 	
 	public void print(Exception e) {
-		System.out.println(e.getMessage());
+		if(!e.getMessage().isEmpty()) {
+			System.out.println(e.getMessage());
+		}
+		e.printStackTrace();
 		logger.log(defaultLoggingLevel,e.getMessage(),e);
 	}
 	
