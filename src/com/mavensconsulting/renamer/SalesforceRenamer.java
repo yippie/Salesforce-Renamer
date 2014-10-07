@@ -125,6 +125,7 @@ public class SalesforceRenamer {
 		            			undoes.add(undo);
 		            		}
 		            		renamer.renameAll(undoes);
+		            		packager.deployZip(BACKUP_FILE);
 		            		break;
 		            	default:
 		            		System.out.println("Not a valid choice, please try again.");
@@ -136,9 +137,12 @@ public class SalesforceRenamer {
 			} catch (ConnectionException e) {
 				logger.print(e);
 			}
+			logger.close();
+            System.out.println("Goodbye");
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 	
     /*
@@ -183,6 +187,7 @@ public class SalesforceRenamer {
     		     rule.setParent(csvRecord.get("Parent"));
     		     rule.setOldName(csvRecord.get("Old Name"));
     		     rule.setNewName(csvRecord.get("New Name"));
+    		     renameList.add(rule);
     		}
     	} catch (IOException eio) {
     		logger.print(eio);
@@ -190,7 +195,7 @@ public class SalesforceRenamer {
     		try {
 				parser.close();
 				in.close();
-    		} catch (IOException ioe) {
+    		} catch (Exception ioe) {
         		logger.print(ioe);
         	}
     	}

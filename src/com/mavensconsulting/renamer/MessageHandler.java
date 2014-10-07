@@ -19,6 +19,7 @@ public class MessageHandler {
 	private Properties appProps;
 	private Logger logger;
 	private Level defaultLoggingLevel;
+	private FileHandler handler;
 	
 	public MessageHandler (Properties p) throws IOException {
 		appProps = p;
@@ -27,8 +28,13 @@ public class MessageHandler {
 		
 		logger = Logger.getLogger("RenameLog");
 		logger.setUseParentHandlers(false);
-		FileHandler handler = new FileHandler(WORK_FOLDER + "/output.log",true);
+		handler = new FileHandler(WORK_FOLDER + "/output.log",true);
 		logger.addHandler(handler);
+	}
+	
+	public void close() {
+		handler.close();
+		logger.removeHandler(handler);
 	}
 	
 	public void print(String message, Level level) {
@@ -41,7 +47,7 @@ public class MessageHandler {
 	}
 	
 	public void print(Exception e) {
-		if(!e.getMessage().isEmpty()) {
+		if(e.getMessage() != null && !e.getMessage().isEmpty()) {
 			System.out.println(e.getMessage());
 		}
 		e.printStackTrace();

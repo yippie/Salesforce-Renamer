@@ -200,11 +200,12 @@ public class RenameUtility {
 	    		newValue = inputStringBuilder.toString();
 	    		//Do the replacing
 	    		for(RenameRule rename : renames) {
-	    			String oldName = rename.getOldBaseName();
-	    			String newName = rename.getNewBaseName();
-	    			newValue = newValue.replaceAll("(?i)" + oldName, newName);
-	    			newValue = newValue.replaceAll("(?<!MVN)</relationshipName>", "_MVN</relationshipName>");
-	    			newEntryName = newEntryName.replaceAll("(?i)" + oldName, newName);
+	    			System.out.println(rename.getNameVariations());
+	    			for(String oldName : rename.getNameVariations().keySet()) {
+		    			String newName = rename.getNameVariations().get(oldName);
+		    			newValue = newValue.replaceAll("(?i)" + oldName, newName);
+		    			newEntryName = newEntryName.replaceAll("(?i)" + oldName, newName);
+	    			}
 	    		}
 	    		reader.close();
 	    		

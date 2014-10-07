@@ -1,5 +1,6 @@
 package com.mavensconsulting.renamer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 //TODO figure out what to do about parent
@@ -19,7 +20,12 @@ public class RenameRule {
 	}
 	
 	public String getOldFullName() {
-		return parent + "." + oldName;
+		String fullName = "";
+		if(parent != null && !parent.isEmpty()) {
+			fullName += parent + ".";
+		}
+		fullName += oldName;
+		return fullName;
 	}
 	
 	public void setOldName(String oldName) {
@@ -32,7 +38,12 @@ public class RenameRule {
 	}
 	
 	public String getNewFullName() {
-		return parent + "." + newName;
+		String fullName = "";
+		if(parent != null && !parent.isEmpty()) {
+			fullName += parent + ".";
+		}
+		fullName += newName;
+		return fullName;
 	}
 	
 	public void setNewName(String newName) {
@@ -50,11 +61,11 @@ public class RenameRule {
 	}
 	
 	public String getOldBaseName () {
-		return oldName.substring(0,oldName.length()-3);
+		return getBase(oldName);
 	}
 	
 	public String getNewBaseName () {
-		return newName.substring(0,newName.length()-3);
+		return getBase(newName);
 	}
 
 	public String getParent() {
@@ -66,6 +77,7 @@ public class RenameRule {
 		buildNameVariations();
 	}
 	
+	//Old name is the key, new name is the value
 	public HashMap<String,String> getNameVariations() {
 		return nameVariations;
 	}
@@ -84,13 +96,20 @@ public class RenameRule {
 
 	private void buildNameVariations() {
 		if(isComplete()){
+			nameVariations = new HashMap<String,String>();
+			ArrayList<String> postfixes = new ArrayList<String>();
+			postfixes.add("__c");
+			postfixes.add("__r");
 			if(type == RuleType.CustomObject) {
-				String newBase = getBase(newName);
-				String oldBase = getBase(oldName);
-				String[] postfixes = {"__Share","__History","__r","__Feed"};
-				for(String variant : postfixes) {
-					nameVariations.put(oldBase+variant,newBase+variant);
-				}
+				postfixes.add("__Share");
+				postfixes.add("__History");
+				postfixes.add("__Feed");
+			}
+			String newBase = getBase(newName);
+			String oldBase = getBase(oldName);
+			
+			for(String variant : postfixes) {
+				nameVariations.put(oldBase+variant,newBase+variant);
 			}
 		}
 	}
