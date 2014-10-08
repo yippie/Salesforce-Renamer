@@ -27,7 +27,7 @@ To run the program follow these steps.
 1. Download SalesforceRenamer.jar and settings.properties and make sure they are in the same directory.
 2. Edit settings.properties to add your credentials and desired paths
 3. Open a command prompt in that directory.
-4. Run the command:
+4. Use java command to run the program.
     
     java -jar SalesforceRenamer.jar
 
