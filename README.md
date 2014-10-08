@@ -29,7 +29,7 @@ To run the program follow these steps.
 3. Open a command prompt in that directory.
 4. Use java command to run the program.
     
-    java -jar SalesforceRenamer.jar
+    >java -jar SalesforceRenamer.jar
 
 
 1) Preparation
