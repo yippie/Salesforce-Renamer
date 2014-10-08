@@ -22,7 +22,7 @@ Getting Started
 
 Salesforce Renamer is a command line program and must be run from a command line.  Each step must be run in order for the rename to work.
 
-To run the program follow these steps.
+To run the program you must have Java 7 installed.
 
 1. Download SalesforceRenamer.jar and settings.properties and make sure they are in the same directory.
 2. Edit settings.properties to add your credentials and desired paths
